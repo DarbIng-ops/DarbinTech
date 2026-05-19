@@ -82,12 +82,13 @@ Proporcionar presencia digital profesional mediante:
 darbin.tech/
 ├── wp-content/
 │   ├── themes/
-│   │   └── custom-darbin/          # Tema personalizado (Elementor-based)
+│   │   └── custom-darbin/          # Tema personalizado (Elementor/Divi)
 │   ├── plugins/
 │   │   ├── rank-math/              # SEO
 │   │   ├── elementor/              # Constructor visual
+│   │   ├── divi/                   # Constructor visual alternativo
 │   │   ├── woocommerce/            # E-commerce
-│   │   └── custom-forms/           # Formularios Web3Forms
+│   │   └── web3forms/              # Formularios sin backend
 │   └── uploads/                    # Media (imágenes, PDFs)
 ├── wp-config.php                   # Credenciales (NO en GitHub)
 ├── .htaccess                       # Reglas rewrite para URLs amigables
