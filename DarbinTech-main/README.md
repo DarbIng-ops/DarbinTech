@@ -174,28 +174,31 @@ CDN:         Cloudflare (opcional, en roadmap)
 
 ---
 
-## 🔮 Futuros Ajustes & Roadmap
+🔮 Futuros Ajustes & Roadmap
+Q2 2026 (Próximos 30 días)
 
-### Q2 2026 (Próximos 30 días)
-- [ ] **Calculadora de precios dinámica** — Widget interactivo en la homepage
-  - Usuarios seleccionan tipo de sitio → reciben presupuesto estimado
-  - Implementación: HTML5 + JavaScript + Web3Forms para lead capture
-- [ ] **Sección de portfolio mejorada** — Galería de casos de uso (clientes reales o simulados)
-- [ ] **Blog de SEO** — Artículos sobre "desarrollo web Uruguay", "e-commerce PYME"
-- [ ] **Formulario de cotización avanzado** — Multi-paso con campo de presupuesto
+ Calculadora de precios dinámica — Widget interactivo en la homepage
 
-### Q3 2026
-- [ ] **Integración con CRM** (HubSpot Free o Zoho CRM)
-- [ ] **Dashboard de seguimiento de proyectos** — Acceso cliente para ver avance
-- [ ] **Chatbot IA** — Respuesta automática WhatsApp Business API
-- [ ] **Página de servicios expandida** — Detalles técnicos por servicio
+Usuarios seleccionan tipo de sitio → reciben presupuesto estimado
+Implementación: HTML5 + JavaScript + Web3Forms para lead capture
 
-### Q4 2026+
-- [ ] **Versión Laravel + Livewire** — Migración parcial a SPA reactiva
-- [ ] **Plataforma SaaS** — Herramienta de monitoreo/mantenimiento para clientes
-- [ ] **Internacionalización (i18n)** — Versión en inglés y portugués
 
----
+ Sección de portfolio mejorada — Galería de casos de uso (clientes reales o simulados)
+ Blog de SEO — Artículos sobre "desarrollo web Uruguay", "e-commerce PYME"
+ Formulario de cotización avanzado — Multi-paso con campo de presupuesto
+
+Q3 2026
+
+ Integración con CRM (HubSpot Free o Zoho CRM)
+ Dashboard de seguimiento de proyectos — Acceso cliente para ver avance
+ Chatbot IA — Respuesta automática WhatsApp Business API
+ Página de servicios expandida — Detalles técnicos por servicio
+
+Q4 2026+
+
+ Versión Laravel + Livewire — Migración parcial a SPA reactiva
+ Plataforma SaaS — Herramienta de monitoreo/mantenimiento para clientes
+ Internacionalización (i18n) — Versión en inglés y portugués
 
 ## 🛡️ Seguridad & Buenas Prácticas
 
