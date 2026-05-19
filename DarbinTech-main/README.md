@@ -40,31 +40,21 @@ Proporcionar presencia digital profesional mediante:
 ## 🛠️ Stack Técnico Completo
 
 ### Frontend
-| Tecnología | Versión | Uso |
-|-----------|---------|-----|
-| **WordPress** | 6.x+ | CMS base para la plataforma corporativa |
-| **Elementor** | Free/Pro | Constructor visual drag-and-drop para diseño de páginas |
-| **Tailwind CSS** | 3.x+ | Framework CSS utility-first para estilos personalizados |
-| **JavaScript** | ES6+ | Interactividad del navegador |
-| **HTML5** | - | Estructura semántica |
+TecnologíaVersiónUsoWordPress6.x+CMS base para la plataforma corporativaElementorFree/ProConstructor visual drag-and-drop para diseño de páginasDivi4.x+Constructor visual alternativo con templates premiumTailwind CSS3.x+Framework CSS utility-first para estilos personalizadosJavaScriptES6+Interactividad del navegadorHTML5-Estructura semántica
 
 ### Backend & Hosting
-| Componente | Proveedor/Tecnología | Detalles |
-|-----------|-------------------|---------|
-| **Hosting** | **Hostinger Business** | Servidor compartido LiteSpeed Cache, PHP 8.2+, cPanel |
-| **Dominio** | Registrado en Hostinger | darbin.tech (DNS gestionado) |
-| **Servidor Web** | LiteSpeed | Caché integrado, mejor rendimiento que Apache/Nginx estándar |
-| **PHP** | 8.2+ | Runtime backend para WordPress y scripts personalizados |
-| **MySQL** | 8.0+ | Base de datos relacional para WordPress |
+ComponenteProveedor/TecnologíaDetallesHostingHostinger BusinessServidor compartido LiteSpeed Cache, PHP 8.2+, cPanelDominioRegistrado en Hostingerdarbin.tech (DNS gestionado)Servidor WebLiteSpeedCaché integrado, mejor rendimiento que Apache/Nginx estándarPHP8.2+Runtime backend para WordPress y scripts personalizadosMySQL8.0+Base de datos relacional para WordPressSSHPuerto 65002Acceso remoto seguro para administración
 
 ### Complementos WordPress Instalados
-- **Rank Math SEO** — Optimización SEO avanzada, sitemap dinámico
-- **LiteSpeed Cache** — Caché de rendimiento integrado con servidor
-- **Site Kit by Google** — Integración Analytics y Search Console
-- **WooCommerce** — E-commerce (para clientes con tiendas)
-- **Web3Forms** — Formularios sin backend (contacto)
-- **Beaver Builder / Elementor** — Constructores de página
-- **SureMail** — Gestión de emails corporativos
+
+Rank Math SEO — Optimización SEO avanzada, sitemap dinámico
+LiteSpeed Cache — Caché de rendimiento integrado con servidor
+Site Kit by Google — Integración Analytics y Search Console
+WooCommerce — E-commerce (para clientes con tiendas)
+Web3Forms — Formularios sin backend (contacto)
+Elementor — Constructor visual drag-and-drop para landing pages
+Divi — Constructor visual alternativo con librería de templates
+SureMail — Gestión de emails corporativos
 
 ### Versionamiento & Repositorio
 | Tool | Detalle |
