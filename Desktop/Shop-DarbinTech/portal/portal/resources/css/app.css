@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --db-bg: #0F1E38;
+    --db-surface: #162844;
+    --db-navy: #1A3A6B;
+    --db-blue: #2E7AB8;
+    --db-green: #6DB33F;
+    --db-text: #E8EFF8;
+    --db-muted: #7A9BBF;
+  }
+}
