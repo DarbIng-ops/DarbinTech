@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\PreRegistration;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -33,6 +34,15 @@ class User extends Authenticatable
             'password'             => 'hashed',
             'must_change_password' => 'boolean',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (User $user) {
+            if ($user->role === 'client') {
+                PreRegistration::where('user_id', $user->id)->delete();
+            }
+        });
     }
 
     public function projects(): HasMany

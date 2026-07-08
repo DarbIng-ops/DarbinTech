@@ -17,7 +17,7 @@
     {{-- Tabs de filtro --}}
     <div class="flex gap-1 mb-4 border-b border-gray-200">
         @foreach ([
-            'all'       => 'Todos',
+            'all'       => 'Activos',
             'pending'   => 'Pendientes',
             'contacted' => 'Contactados',
             'approved'  => 'Aprobados',

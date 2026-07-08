@@ -135,7 +135,11 @@ class PreRegistrationList extends Component
     public function render(): \Illuminate\View\View
     {
         $preRegistrations = PreRegistration::query()
-            ->when($this->statusFilter !== 'all', fn ($q) => $q->where('status', $this->statusFilter))
+            ->when(
+                $this->statusFilter === 'all',
+                fn ($q) => $q->whereIn('status', ['pending', 'contacted']),
+                fn ($q) => $q->where('status', $this->statusFilter),
+            )
             ->latest()
             ->paginate(20);
 
