@@ -177,8 +177,8 @@
                     @if (!$newUserPassword)
                         <div class="rounded-lg px-4 py-3 text-sm"
                              style="background-color:rgba(242,183,5,.1);border:1px solid #F2B705;color:#111111;">
-                            La contraseña temporal no está disponible en esta sesión.
-                            Para aprobar y notificar, cerrá y reabrí este panel antes de hacer clic en "Aprobar".
+                            La contraseña temporal no está disponible para este registro.
+                            Es probable que haya sido creado por fuera del flujo normal del modal.
                         </div>
                     @else
                         <button wire:click="approve({{ $selectedItem->id }})"

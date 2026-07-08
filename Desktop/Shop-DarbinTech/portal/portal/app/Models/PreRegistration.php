@@ -16,6 +16,7 @@ class PreRegistration extends Model
         'idea',
         'status',
         'user_id',
+        'temp_plain_password',
     ];
 
     public function user(): BelongsTo

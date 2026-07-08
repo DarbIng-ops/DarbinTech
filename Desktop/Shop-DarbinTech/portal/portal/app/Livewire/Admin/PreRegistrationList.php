@@ -48,6 +48,9 @@ class PreRegistrationList extends Component
             $this->newUserPassword    = Str::random(10);
             $this->projectName        = "Proyecto de {$item->name}";
             $this->projectDescription = $item->idea;
+        } elseif ($item->temp_plain_password !== null) {
+            // Usuario creado pero aún no aprobado: recuperar contraseña persistida.
+            $this->newUserPassword = $item->temp_plain_password;
         }
     }
 
@@ -96,11 +99,10 @@ class PreRegistrationList extends Component
         ]);
 
         $item->update([
-            'user_id' => $user->id,
-            'status'  => 'contacted',
+            'user_id'             => $user->id,
+            'status'              => 'contacted',
+            'temp_plain_password' => $this->newUserPassword,
         ]);
-
-        // $newUserPassword se mantiene en estado para ser usado en approve()
     }
 
     public function approve(int $id): void
@@ -109,18 +111,25 @@ class PreRegistrationList extends Component
         $user    = $item->user;
         $project = $user->projects()->latest()->first();
 
+        // La DB es la fuente de verdad; $this->newUserPassword es fallback
+        // para el caso improbable de que ambos pasos ocurran sin recargar el componente.
+        $password = $item->temp_plain_password ?? $this->newUserPassword;
+
         Mail::to($user->email)->send(
-            new ProjectAcceptedMail($user, $project, $this->newUserPassword)
+            new ProjectAcceptedMail($user, $project, $password)
         );
 
-        $item->update(['status' => 'approved']);
+        $item->update([
+            'status'              => 'approved',
+            'temp_plain_password' => null,
+        ]);
 
-        $emailDestino          = $user->email;
-        $this->selectedId      = null;
-        $this->projectName     = '';
+        $emailDestino             = $user->email;
+        $this->selectedId         = null;
+        $this->projectName        = '';
         $this->projectDescription = '';
-        $this->newUserPassword = '';
-        $this->successMessage  = "✓ Email enviado a {$emailDestino}. Pre-registro marcado como Aprobado.";
+        $this->newUserPassword    = '';
+        $this->successMessage     = "✓ Email enviado a {$emailDestino}. Pre-registro marcado como Aprobado.";
     }
 
     public function render(): \Illuminate\View\View
