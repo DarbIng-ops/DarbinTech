@@ -107,7 +107,7 @@
 
     <p class="mt-6 text-xs" style="color: var(--db-muted);">
         ¿Ya tienes cuenta?
-        <a href="{{ route('login') }}" style="color: var(--db-blue);" class="hover:underline">Inicia sesión</a>
+        <a href="{{ route('acceder') }}" style="color: var(--db-blue);" class="hover:underline">Inicia sesión</a>
     </p>
 
 </div>

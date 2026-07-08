@@ -38,4 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('guest')->get('/acceder', fn () => view('acceder.index'))->name('acceder');
+
 require __DIR__.'/auth.php';
