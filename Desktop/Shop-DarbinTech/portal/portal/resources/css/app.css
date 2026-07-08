@@ -1,15 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --db-bg: #0F1E38;
-    --db-surface: #162844;
-    --db-navy: #1A3A6B;
-    --db-blue: #2E7AB8;
-    --db-green: #6DB33F;
-    --db-text: #E8EFF8;
-    --db-muted: #7A9BBF;
+    --db-bg: #FFFFFF;
+    --db-surface: #F9FAFB;
+    --db-navy: #E5E7EB;
+    --db-blue: #FFC629;
+    --db-green: #FFC629;
+    --db-text: #111111;
+    --db-muted: #6B7280;
+  }
+
+  h1, h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 }
