@@ -1,11 +1,67 @@
 <div class="space-y-6">
     <div>
-        <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-indigo-600">
+        <a href="{{ route('dashboard') }}"
+           class="text-sm font-medium"
+           style="color: var(--db-muted);"
+           onmouseover="this.style.color='var(--db-text)'"
+           onmouseout="this.style.color='var(--db-muted)'">
             ← Mis proyectos
         </a>
-        <h1 class="mt-2 text-2xl font-bold text-gray-900">{{ $project->name }}</h1>
-        @if ($project->description)
-            <p class="mt-1 text-gray-600">{{ $project->description }}</p>
+
+        @if ($editing)
+            <div class="mt-3 space-y-3">
+                <div>
+                    <input wire:model="name" type="text"
+                        class="w-full rounded-lg px-3.5 py-2.5 text-lg font-bold outline-none transition-colors"
+                        style="border: 1px solid #E5E7EB; color: #111111;"
+                        onfocus="this.style.borderColor='#F2B705'"
+                        onblur="this.style.borderColor='#E5E7EB'">
+                    @error('name') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <textarea wire:model="description" rows="3"
+                        class="w-full rounded-lg px-3.5 py-2.5 text-sm outline-none transition-colors resize-none"
+                        style="border: 1px solid #E5E7EB; color: #111111;"
+                        onfocus="this.style.borderColor='#F2B705'"
+                        onblur="this.style.borderColor='#E5E7EB'"
+                        placeholder="Descripción del proyecto"></textarea>
+                    @error('description') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                </div>
+                <div class="flex gap-2">
+                    <button wire:click="save"
+                        wire:loading.attr="disabled"
+                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors"
+                        style="background-color: #F2B705; color: #111111;"
+                        onmouseover="this.style.backgroundColor='#D9A400'"
+                        onmouseout="this.style.backgroundColor='#F2B705'">
+                        <span wire:loading.remove wire:target="save">Guardar</span>
+                        <span wire:loading wire:target="save">Guardando…</span>
+                    </button>
+                    <button wire:click="$set('editing', false)"
+                        class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+                        style="color: #6B7280; background-color: #F9FAFB; border: 1px solid #E5E7EB;"
+                        onmouseover="this.style.backgroundColor='#E5E7EB'"
+                        onmouseout="this.style.backgroundColor='#F9FAFB'">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        @else
+            <div class="mt-2 flex items-start justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold" style="color: var(--db-text);">{{ $project->name }}</h1>
+                    @if ($project->description)
+                        <p class="mt-1 text-sm" style="color: var(--db-muted);">{{ $project->description }}</p>
+                    @endif
+                </div>
+                <button wire:click="startEdit"
+                    class="shrink-0 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+                    style="border: 1px solid #E5E7EB; color: #6B7280;"
+                    onmouseover="this.style.borderColor='#F2B705'; this.style.color='#111111';"
+                    onmouseout="this.style.borderColor='#E5E7EB'; this.style.color='#6B7280';">
+                    Editar información
+                </button>
+            </div>
         @endif
     </div>
 

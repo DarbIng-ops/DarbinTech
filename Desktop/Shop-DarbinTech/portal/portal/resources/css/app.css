@@ -8,9 +8,10 @@
   :root {
     --db-bg: #FFFFFF;
     --db-surface: #F9FAFB;
+    --db-alt: #FAFAF7;
     --db-navy: #E5E7EB;
-    --db-blue: #FFC629;
-    --db-green: #FFC629;
+    --db-blue: #F2B705;
+    --db-green: #F2B705;
     --db-text: #111111;
     --db-muted: #6B7280;
   }

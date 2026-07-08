@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+
 class UserController extends Controller
 {
     public function index(): View
@@ -25,9 +26,10 @@ class UserController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    public function show(User $user): RedirectResponse
+    public function show(User $user): View
     {
-        return redirect()->route('admin.users.index');
+        $user->load('projects');
+        return view('admin.users.show', compact('user'));
     }
 
     public function edit(User $user): RedirectResponse

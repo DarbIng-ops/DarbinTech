@@ -110,7 +110,7 @@
                     </ul>
                     <ul class="flex gap-3 text-sm leading-normal">
                         <li>
-                            <a href="https://cloud.laravel.com" target="_blank" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:opacity-90 px-5 py-1.5 bg-[#FFC629] rounded-sm border border-[#FFC629] text-[#111111] font-semibold text-sm leading-normal">
+                            <a href="https://cloud.laravel.com" target="_blank" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-[#D9A400] hover:border-[#D9A400] px-5 py-1.5 bg-[#F2B705] rounded-sm border border-[#F2B705] text-[#111111] font-semibold text-sm leading-normal">
                                 Deploy now
                             </a>
                         </li>

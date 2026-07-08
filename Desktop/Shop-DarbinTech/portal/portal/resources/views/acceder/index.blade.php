@@ -35,7 +35,7 @@
             {{-- Mensaje de éxito --}}
             @if (session('success'))
                 <div class="mb-6 px-4 py-3 rounded-lg text-sm font-medium"
-                     style="background-color: rgba(255,198,41,.15); border: 1px solid var(--db-green); color: var(--db-green);">
+                     style="background-color: rgba(242,183,5,.15); border: 1px solid var(--db-green); color: var(--db-green);">
                     {{ session('success') }}
                 </div>
             @endif
@@ -112,10 +112,10 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-opacity"
+                    class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors"
                     style="background-color: var(--db-blue); color: #111111;"
-                    onmouseover="this.style.opacity='.88'"
-                    onmouseout="this.style.opacity='1'">
+                    onmouseover="this.style.backgroundColor='#D9A400'"
+                    onmouseout="this.style.backgroundColor='var(--db-blue)'">
                     Enviar mi idea
                 </button>
             </form>
@@ -134,7 +134,7 @@
             {{-- Status post-reseteo de contraseña --}}
             @if (session('status'))
                 <div class="mb-6 px-4 py-3 rounded-lg text-sm font-medium"
-                     style="background-color: rgba(255,198,41,.15); border: 1px solid var(--db-green); color: var(--db-green);">
+                     style="background-color: rgba(242,183,5,.15); border: 1px solid var(--db-green); color: var(--db-green);">
                     {{ session('status') }}
                 </div>
             @endif
@@ -209,10 +209,10 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-opacity"
+                    class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors"
                     style="background-color: var(--db-green); color: #111111;"
-                    onmouseover="this.style.opacity='.88'"
-                    onmouseout="this.style.opacity='1'">
+                    onmouseover="this.style.backgroundColor='#D9A400'"
+                    onmouseout="this.style.backgroundColor='var(--db-green)'">
                     Iniciar sesión
                 </button>
             </form>

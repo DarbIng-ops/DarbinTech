@@ -9,6 +9,10 @@ class ProjectDetail extends Component
 {
     public Project $project;
 
+    public bool   $editing     = false;
+    public string $name        = '';
+    public string $description = '';
+
     public const STAGES = [
         'briefing'           => 'Briefing',
         'wireframe'          => 'Wireframe',
@@ -23,6 +27,29 @@ class ProjectDetail extends Component
     {
         abort_if($project->user_id !== auth()->id(), 403);
         $this->project = $project;
+    }
+
+    public function startEdit(): void
+    {
+        $this->name        = $this->project->name;
+        $this->description = $this->project->description ?? '';
+        $this->resetValidation();
+        $this->editing = true;
+    }
+
+    public function save(): void
+    {
+        $this->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $this->project->update([
+            'name'        => $this->name,
+            'description' => $this->description ?: null,
+        ]);
+
+        $this->editing = false;
     }
 
     public function render(): \Illuminate\View\View

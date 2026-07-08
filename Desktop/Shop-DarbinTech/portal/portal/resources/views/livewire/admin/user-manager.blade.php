@@ -37,6 +37,15 @@
                         </td>
                         <td class="px-6 py-4 text-gray-500">{{ $user->created_at->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 text-right space-x-3">
+                            @if ($user->role === 'client')
+                                <a href="{{ route('admin.users.show', $user) }}"
+                                    class="text-sm font-medium"
+                                    style="color: #F2B705;"
+                                    onmouseover="this.style.color='#D9A400'"
+                                    onmouseout="this.style.color='#F2B705'">
+                                    Ver perfil
+                                </a>
+                            @endif
                             <button wire:click="openEdit({{ $user->id }})"
                                 class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
                                 Editar
