@@ -65,6 +65,44 @@ class PreRegistrationList extends Component
 
     public function createUserAndProject(): void
     {
+        $item         = PreRegistration::findOrFail($this->selectedId);
+        $existingUser = User::where('email', $item->email)->first();
+
+        if ($existingUser !== null) {
+            $this->validate([
+                'projectName'        => ['required', 'string', 'min:3', 'max:255'],
+                'projectDescription' => ['required', 'string', 'min:10'],
+            ], [
+                'projectName.required'        => 'El nombre del proyecto es obligatorio.',
+                'projectName.min'             => 'El nombre debe tener al menos 3 caracteres.',
+                'projectDescription.required' => 'La descripción es obligatoria.',
+                'projectDescription.min'      => 'La descripción debe tener al menos 10 caracteres.',
+            ]);
+
+            Project::create([
+                'user_id'           => $existingUser->id,
+                'name'              => $this->projectName,
+                'description'       => $this->projectDescription,
+                'stage'             => 'briefing',
+                'progress'          => 0,
+                'revisions_allowed' => 1,
+                'revisions_used'    => 0,
+            ]);
+
+            $item->update([
+                'user_id' => $existingUser->id,
+                'status'  => 'contacted',
+                // temp_plain_password queda null: el cliente ya tiene credenciales
+            ]);
+
+            $this->selectedId         = null;
+            $this->projectName        = '';
+            $this->projectDescription = '';
+            $this->resetValidation();
+            $this->successMessage = "✓ Proyecto creado y vinculado al cliente existente {$existingUser->name}. Notificalo manualmente si corresponde.";
+            return;
+        }
+
         $this->validate([
             'projectName'        => ['required', 'string', 'min:3', 'max:255'],
             'projectDescription' => ['required', 'string', 'min:10'],
@@ -77,8 +115,6 @@ class PreRegistrationList extends Component
             'newUserPassword.required'    => 'La contraseña es obligatoria.',
             'newUserPassword.min'         => 'La contraseña debe tener al menos 8 caracteres.',
         ]);
-
-        $item = PreRegistration::findOrFail($this->selectedId);
 
         $user = User::create([
             'name'                 => $item->name,
@@ -111,25 +147,28 @@ class PreRegistrationList extends Component
         $user    = $item->user;
         $project = $user->projects()->latest()->first();
 
-        // La DB es la fuente de verdad; $this->newUserPassword es fallback
-        // para el caso improbable de que ambos pasos ocurran sin recargar el componente.
         $password = $item->temp_plain_password ?? $this->newUserPassword;
 
-        Mail::to($user->email)->send(
-            new ProjectAcceptedMail($user, $project, $password)
-        );
+        if ($password !== null && $password !== '') {
+            Mail::to($user->email)->send(
+                new ProjectAcceptedMail($user, $project, $password)
+            );
+            $successText = "✓ Email enviado a {$user->email}. Pre-registro marcado como Aprobado.";
+        } else {
+            // Cliente ya existente o creado manualmente: no hay credenciales que enviar.
+            $successText = "✓ Pre-registro marcado como Aprobado. El cliente ya tenía cuenta — no se envió email de bienvenida.";
+        }
 
         $item->update([
             'status'              => 'approved',
             'temp_plain_password' => null,
         ]);
 
-        $emailDestino             = $user->email;
         $this->selectedId         = null;
         $this->projectName        = '';
         $this->projectDescription = '';
         $this->newUserPassword    = '';
-        $this->successMessage     = "✓ Email enviado a {$emailDestino}. Pre-registro marcado como Aprobado.";
+        $this->successMessage     = $successText;
     }
 
     public function render(): \Illuminate\View\View
@@ -152,10 +191,16 @@ class PreRegistrationList extends Component
             ? PreRegistration::with('user.projects')->find($this->selectedId)
             : null;
 
+        // Solo buscar usuario existente cuando el pre-registro todavía no tiene user_id
+        $existingUserForSelected = ($selectedItem && $selectedItem->user_id === null)
+            ? User::where('email', $selectedItem->email)->first()
+            : null;
+
         return view('livewire.admin.pre-registration-list', [
-            'preRegistrations' => $preRegistrations,
-            'counts'           => $counts,
-            'selectedItem'     => $selectedItem,
+            'preRegistrations'        => $preRegistrations,
+            'counts'                  => $counts,
+            'selectedItem'            => $selectedItem,
+            'existingUserForSelected' => $existingUserForSelected,
         ]);
     }
 }

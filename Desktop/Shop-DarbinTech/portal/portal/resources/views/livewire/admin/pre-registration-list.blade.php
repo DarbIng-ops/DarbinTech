@@ -157,12 +157,12 @@
                     </span>
                 </div>
 
-            {{-- ---- Estado 2: usuario creado, listo para aprobar ---- --}}
+            {{-- ---- Estado 2: usuario vinculado, listo para aprobar ---- --}}
             @elseif ($selectedItem->user_id !== null)
                 <div class="px-6 py-6 space-y-4">
                     <div class="rounded-lg p-4" style="background-color:#F9FAFB;border:1px solid #E5E7EB;">
                         <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#6B7280;">
-                            Usuario creado
+                            Cliente vinculado
                         </p>
                         <p class="text-sm" style="color:#111111;">
                             <span class="font-medium">Email:</span> {{ $selectedItem->user->email }}
@@ -174,21 +174,31 @@
                         @endif
                     </div>
 
-                    @if (!$newUserPassword)
-                        <div class="rounded-lg px-4 py-3 text-sm"
-                             style="background-color:rgba(242,183,5,.1);border:1px solid #F2B705;color:#111111;">
-                            La contraseña temporal no está disponible para este registro.
-                            Es probable que haya sido creado por fuera del flujo normal del modal.
-                        </div>
-                    @else
+                    @if ($newUserPassword)
+                        {{-- Cliente nuevo: aprobar envía email con credenciales --}}
                         <button wire:click="approve({{ $selectedItem->id }})"
                             wire:loading.attr="disabled"
                             class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors"
                             style="background-color:#F2B705;color:#111111;"
                             onmouseover="this.style.backgroundColor='#D9A400'"
                             onmouseout="this.style.backgroundColor='#F2B705'">
-                            <span wire:loading.remove wire:target="approve">Aprobar y notificar</span>
+                            <span wire:loading.remove wire:target="approve">Aprobar y notificar al cliente</span>
                             <span wire:loading wire:target="approve">Enviando email…</span>
+                        </button>
+                    @else
+                        {{-- Cliente ya existente o creado manualmente: aprobar sin email --}}
+                        <div class="rounded-lg px-4 py-3 text-sm"
+                             style="background-color:rgba(242,183,5,.1);border:1px solid #F2B705;color:#111111;">
+                            Este cliente ya tenía cuenta. Al aprobar no se enviará email de bienvenida con contraseña.
+                        </div>
+                        <button wire:click="approve({{ $selectedItem->id }})"
+                            wire:loading.attr="disabled"
+                            class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors"
+                            style="background-color:#F2B705;color:#111111;"
+                            onmouseover="this.style.backgroundColor='#D9A400'"
+                            onmouseout="this.style.backgroundColor='#F2B705'">
+                            <span wire:loading.remove wire:target="approve">Marcar como aprobado</span>
+                            <span wire:loading wire:target="approve">Procesando…</span>
                         </button>
                     @endif
                 </div>
@@ -196,6 +206,18 @@
             {{-- ---- Estado 3: sin usuario, crear primero ---- --}}
             @else
                 <div class="px-6 py-6 space-y-4">
+
+                    {{-- Aviso: el email ya pertenece a un cliente existente --}}
+                    @if ($existingUserForSelected)
+                        <div class="rounded-lg px-4 py-3 text-sm"
+                             style="background-color:rgba(242,183,5,.1);border:1px solid #F2B705;color:#111111;">
+                            <p class="font-semibold mb-1">Este email ya pertenece a un cliente existente</p>
+                            <p>El cliente <strong>{{ $existingUserForSelected->name }}</strong>
+                            ({{ $existingUserForSelected->email }}) ya tiene cuenta.
+                            Al continuar se creará un nuevo proyecto para ese cliente
+                            sin generar una cuenta ni contraseña nueva.</p>
+                        </div>
+                    @endif
 
                     <div>
                         <label class="block text-sm font-medium mb-1.5" style="color:#111111;">
@@ -227,23 +249,26 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-1.5" style="color:#111111;">
-                            Contraseña generada
-                        </label>
-                        <input wire:model="newUserPassword" type="text"
-                            class="w-full rounded-lg px-3.5 py-2.5 text-sm font-mono outline-none transition-colors"
-                            style="border:1px solid #E5E7EB;color:#111111;background-color:#F9FAFB;"
-                            onfocus="this.style.borderColor='#F2B705'"
-                            onblur="this.style.borderColor='#E5E7EB'"
-                            placeholder="Contraseña">
-                        <p class="mt-1 text-xs" style="color:#6B7280;">
-                            Podés editarla antes de crear el usuario.
-                        </p>
-                        @error('newUserPassword')
-                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    {{-- Campo de contraseña solo para clientes nuevos --}}
+                    @if (!$existingUserForSelected)
+                        <div>
+                            <label class="block text-sm font-medium mb-1.5" style="color:#111111;">
+                                Contraseña generada
+                            </label>
+                            <input wire:model="newUserPassword" type="text"
+                                class="w-full rounded-lg px-3.5 py-2.5 text-sm font-mono outline-none transition-colors"
+                                style="border:1px solid #E5E7EB;color:#111111;background-color:#F9FAFB;"
+                                onfocus="this.style.borderColor='#F2B705'"
+                                onblur="this.style.borderColor='#E5E7EB'"
+                                placeholder="Contraseña">
+                            <p class="mt-1 text-xs" style="color:#6B7280;">
+                                Podés editarla antes de crear el usuario.
+                            </p>
+                            @error('newUserPassword')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    @endif
 
                     <button wire:click="createUserAndProject()"
                         wire:loading.attr="disabled"
@@ -251,7 +276,11 @@
                         style="background-color:#F2B705;color:#111111;"
                         onmouseover="this.style.backgroundColor='#D9A400'"
                         onmouseout="this.style.backgroundColor='#F2B705'">
-                        <span wire:loading.remove wire:target="createUserAndProject">Crear usuario y proyecto</span>
+                        @if ($existingUserForSelected)
+                            <span wire:loading.remove wire:target="createUserAndProject">Crear proyecto para cliente existente</span>
+                        @else
+                            <span wire:loading.remove wire:target="createUserAndProject">Crear usuario y proyecto</span>
+                        @endif
                         <span wire:loading wire:target="createUserAndProject">Creando…</span>
                     </button>
 
