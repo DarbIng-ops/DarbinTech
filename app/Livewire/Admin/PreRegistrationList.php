@@ -18,6 +18,9 @@ class PreRegistrationList extends Component
     public string $statusFilter = 'all';
 
     public ?int $selectedId = null;
+    // $newUserPassword solo vive en memoria Livewire durante la sesión del modal.
+    // Se persiste en pre_registrations.temp_plain_password para sobrevivir cierres
+    // del modal entre createUserAndProject() y approve().
     public string $newUserPassword = '';
     public string $projectName = '';
     public string $projectDescription = '';
@@ -65,7 +68,9 @@ class PreRegistrationList extends Component
 
     public function createUserAndProject(): void
     {
-        $item         = PreRegistration::findOrFail($this->selectedId);
+        $item = PreRegistration::findOrFail($this->selectedId);
+        // Verificar duplicado de email ANTES de validar: si el usuario ya existe,
+        // la validación de contraseña no aplica y User::create() lanzaría una excepción.
         $existingUser = User::where('email', $item->email)->first();
 
         if ($existingUser !== null) {
@@ -147,15 +152,18 @@ class PreRegistrationList extends Component
         $user    = $item->user;
         $project = $user->projects()->latest()->first();
 
+        // DB es la fuente de verdad: temp_plain_password puede haberse borrado de
+        // la memoria Livewire si el admin cerró y reabrió el modal entre pasos.
         $password = $item->temp_plain_password ?? $this->newUserPassword;
 
         if ($password !== null && $password !== '') {
+            // Cliente nuevo: el email incluye sus credenciales de acceso.
             Mail::to($user->email)->send(
                 new ProjectAcceptedMail($user, $project, $password)
             );
             $successText = "✓ Email enviado a {$user->email}. Pre-registro marcado como Aprobado.";
         } else {
-            // Cliente ya existente o creado manualmente: no hay credenciales que enviar.
+            // Cliente ya existente o vinculado manualmente: ya tiene contraseña propia.
             $successText = "✓ Pre-registro marcado como Aprobado. El cliente ya tenía cuenta — no se envió email de bienvenida.";
         }
 

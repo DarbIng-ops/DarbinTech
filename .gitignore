@@ -1,0 +1,42 @@
+# Dependencias
+/vendor
+/node_modules
+
+# Laravel — archivos generados en runtime
+/public/hot
+/public/storage
+/public/build
+/storage/*.key
+/storage/pail
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+
+# Base de datos SQLite local
+/database/*.sqlite
+/database/*.sqlite-shm
+/database/*.sqlite-wal
+
+# Docker
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+
+# IDEs y editores
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+# Claude Code — herramienta de desarrollo, no parte del proyecto
+.claude/
+CLAUDE.md
+*.claude.json

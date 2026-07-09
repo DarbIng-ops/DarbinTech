@@ -254,3 +254,10 @@ Para reportar bugs o sugerir mejoras:
 
 **Última actualización:** Mayo 2026  
 **Estado del proyecto:** ✅ En producción (pre-revenue)
+
+---
+
+## Documentación técnica del portal
+
+Ver [README-portal.md](./README-portal.md) para instalación, rutas,
+roles y stack técnico del portal Laravel.

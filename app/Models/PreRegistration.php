@@ -16,6 +16,8 @@ class PreRegistration extends Model
         'idea',
         'status',
         'user_id',
+        // Contraseña en texto plano, vida corta: se guarda en createUserAndProject()
+        // para sobrevivir al cierre del modal, y se borra en approve() tras enviar el email.
         'temp_plain_password',
     ];
 

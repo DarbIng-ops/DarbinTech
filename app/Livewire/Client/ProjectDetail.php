@@ -25,6 +25,9 @@ class ProjectDetail extends Component
 
     public function mount(Project $project): void
     {
+        // Autorización aquí (no en Policy) porque Livewire inyecta el modelo directamente
+        // desde la URL — sin este chequeo, cualquier cliente autenticado podría ver
+        // proyectos ajenos con solo cambiar el ID en la ruta.
         abort_if($project->user_id !== auth()->id(), 403);
         $this->project = $project;
     }

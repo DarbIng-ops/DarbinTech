@@ -38,6 +38,9 @@ class User extends Authenticatable
 
     protected static function booted(): void
     {
+        // Sin esto, borrar un User client dejaría filas huérfanas en pre_registrations
+        // con user_id apuntando a un usuario inexistente, rompiendo la vista admin.
+        // Se filtra por 'client' para no tocar pre-registros de admin en un futuro.
         static::deleting(function (User $user) {
             if ($user->role === 'client') {
                 PreRegistration::where('user_id', $user->id)->delete();
