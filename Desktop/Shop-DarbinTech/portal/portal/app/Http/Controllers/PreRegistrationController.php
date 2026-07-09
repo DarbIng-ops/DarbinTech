@@ -24,7 +24,7 @@ class PreRegistrationController extends Controller
 
         PreRegistration::create($request->only('name', 'email', 'idea'));
 
-        return redirect()->route('pre-registro')
+        return redirect()->route('acceder')
             ->with('success', '¡Gracias! Recibimos tu idea y nos pondremos en contacto pronto.');
     }
 }

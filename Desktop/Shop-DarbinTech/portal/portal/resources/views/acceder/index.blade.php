@@ -13,9 +13,11 @@
 
     {{-- Logo --}}
     <div class="mb-8 text-center">
-        <span class="text-2xl font-bold tracking-tight">
-            <span style="color: var(--db-text);">Darbin</span><span style="color: var(--db-blue);">Tech</span>
-        </span>
+        <a href="https://darbin.tech/" class="inline-block">
+            <span class="text-2xl font-bold tracking-tight">
+                <span style="color: var(--db-text);">Darbin</span><span style="color: var(--db-blue);">Tech</span>
+            </span>
+        </a>
         <p class="mt-1 text-sm" style="color: var(--db-muted);">Agencia de diseño y desarrollo web</p>
     </div>
 
