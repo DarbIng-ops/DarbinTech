@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $admin = User::updateOrCreate(
-            ['email' => 'alirioportilla96@gmail.com'],
+            ['email' => 'admin@darbintech.test'],
             [
                 'name'     => 'Alirio Portilla',
                 'password' => Hash::make('admin1234'),

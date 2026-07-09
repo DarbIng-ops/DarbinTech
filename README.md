@@ -1,4 +1,4 @@
-# Darbin Tech — Agencia de Desarrollo Web
+# Darbin Tech — Portal de Clientes
 
 **Proyecto Productivo SENA - Análisis y Desarrollo de Software (ADSO)**  
 **Ficha:** 2977408 | **Centro:** CENIGRAF  
@@ -6,258 +6,164 @@
 
 ---
 
-## 📌 Descripción del Proyecto
+## Descripción del Proyecto
 
-**Darbin Tech** es una agencia web especializada en el diseño y desarrollo de soluciones digitales para emprendedores, pequeñas y medianas empresas (PYMES) en Uruguay y Latinoamérica. 
+**Darbin Tech Portal** es el sistema interno de gestión de proyectos entre Darbin Tech y sus
+clientes. Permite al equipo administrar solicitudes de servicio, usuarios y proyectos; y a los
+clientes hacer seguimiento en tiempo real del avance de su sitio web.
 
-### Objetivo Principal
-Proporcionar presencia digital profesional mediante:
-- **Landing pages** de alto impacto
-- **Sitios web profesionales** responsive y optimizados
-- **Tiendas e-commerce** con WooCommerce
-- **Servicios de diseño gráfico** complementarios
-
-**Enfoque:** Ciclos rápidos de entrega, alto volumen de clientes, tiempos de proyecto cortos, y máximo ROI para el cliente final.
+Desarrollado con **Laravel 13 + Livewire 4** como proyecto productivo para el programa ADSO del
+SENA. Diseñado para desplegarse en portal.darbin.tech (deploy aún pendiente, ver sección Estado Actual).
 
 ---
 
-## 🌐 Acceso a la Página
+## Stack Técnico
 
-### URL Principal
-👉 **[darbin.tech](https://darbin.tech/)**
-
-### Cómo Acceder
-1. Abre el navegador (Chrome, Firefox, Safari, Edge)
-2. Dirígete a: `https://darbin.tech/`
-3. La página se cargará completamente (optimizada para dispositivos móviles y desktop)
-
-### Portafolio del Founder
-- **CV Profesional:** [cvalirio.darbin.tech](https://cvalirio.darbin.tech/)
-- **Instagram:** [@alirio_96](https://instagram.com/alirio_96) — Contenido de educación y cyberseguridad
-
----
-
-## 🛠️ Stack Técnico Completo
-
-### Frontend
-| Tecnología | Versión | Uso |
-|-----------|---------|-----|
-| **WordPress** | 6.x+ | CMS base para la plataforma corporativa |
-| **Elementor** | Free/Pro | Constructor visual drag-and-drop para diseño de páginas |
-| **Tailwind CSS** | 3.x+ | Framework CSS utility-first para estilos personalizados |
-| **JavaScript** | ES6+ | Interactividad del navegador |
-| **HTML5** | - | Estructura semántica |
-
-### Backend & Hosting
-| Componente | Proveedor/Tecnología | Detalles |
-|-----------|-------------------|---------|
-| **Hosting** | **Hostinger Business** | Servidor compartido LiteSpeed Cache, PHP 8.2+, cPanel |
-| **Dominio** | Registrado en Hostinger | darbin.tech (DNS gestionado) |
-| **Servidor Web** | LiteSpeed | Caché integrado, mejor rendimiento que Apache/Nginx estándar |
-| **PHP** | 8.2+ | Runtime backend para WordPress y scripts personalizados |
-| **MySQL** | 8.0+ | Base de datos relacional para WordPress |
-
-### Complementos WordPress Instalados
-- **Rank Math SEO** — Optimización SEO avanzada, sitemap dinámico
-- **LiteSpeed Cache** — Caché de rendimiento integrado con servidor
-- **Site Kit by Google** — Integración Analytics y Search Console
-- **WooCommerce** — E-commerce (para clientes con tiendas)
-- **Web3Forms** — Formularios sin backend (contacto)
-- **Beaver Builder / Elementor** — Constructores de página
-- **SureMail** — Gestión de emails corporativos
-
-### Versionamiento & Repositorio
-| Tool | Detalle |
-|------|--------|
-| **Git** | Control de versiones (repositorio publico en GitHub) |
-| **GitHub** | [DarbIng-ops](https://github.com/DarbIng-ops) — Organización principal |
-| **.gitignore** | Excluye `wp-config.php`, `node_modules/`, archivos sensibles |
+| Capa | Tecnología | Versión |
+|------|-----------|---------|
+| **Backend** | Laravel (PHP) | 13.15.0 / PHP 8.4.0 |
+| **Frontend reactivo** | Livewire | 4.3.1 |
+| **Estilos** | Tailwind CSS | 3.x |
+| **JS interactivo** | Alpine.js | 3.x |
+| **Build tool** | Vite | 8.x |
+| **Base de datos** | MySQL / MariaDB | 8.0+ |
+| **Autenticación** | Laravel Breeze | 2.4.x |
+| **Testing** | PHPUnit | 12.x |
 
 ---
 
-## 💻 Arquitectura Técnica
+## Instalación desde Cero
 
-### Estructura de Carpetas
-```
-darbin.tech/
-├── wp-content/
-│   ├── themes/
-│   │   └── custom-darbin/          # Tema personalizado (Elementor-based)
-│   ├── plugins/
-│   │   ├── rank-math/              # SEO
-│   │   ├── elementor/              # Constructor visual
-│   │   ├── woocommerce/            # E-commerce
-│   │   └── custom-forms/           # Formularios Web3Forms
-│   └── uploads/                    # Media (imágenes, PDFs)
-├── wp-config.php                   # Credenciales (NO en GitHub)
-├── .htaccess                       # Reglas rewrite para URLs amigables
-└── robots.txt                      # SEO + exclusiones de crawl
-```
-
-### Stack de Desarrollo Local (para desarrolladores)
 ```bash
-# Clonación del repositorio
 git clone https://github.com/DarbIng-ops/DarbinTech.git
-cd DarbinTechech
-
-# Dependencias (si se usa build tools)
-npm install      # Para Tailwind y JS bundling
-composer install # Para cualquier extensión PHP personalizada
-
-# Ver en local (requiere LAMP/LEMP local)
-# Usar Local by Flywheel o similar para WordPress local
+cd DarbinTech
+composer install
+cp .env.example .env
+php artisan key:generate
 ```
+
+Configurá `.env` con tus credenciales de base de datos (`DB_HOST`, `DB_DATABASE`,
+`DB_USERNAME`, `DB_PASSWORD`), luego:
+
+```bash
+php artisan migrate
+php artisan db:seed   # crea admin (admin@darbintech.test / admin1234) y cliente de prueba
+npm install
+npm run dev           # desarrollo con hot-reload
+# o: npm run build   # build para producción
+php artisan serve     # servidor local en http://127.0.0.1:8000
+```
+
+> **Atajo:** `composer run setup` ejecuta todos los pasos anteriores en un solo comando.
 
 ---
 
-## 🎯 Propósito de la Página
+## Roles del Sistema
 
-### Para Clientes Potenciales
-✅ **Vitrina digital** — Muestra de servicios, portfolio, casos de uso  
-✅ **Confianza y credibilidad** — Testimonio de competencia profesional  
-✅ **Conversión** — Call-to-action principal: WhatsApp directo (+598 99 423 217)  
-✅ **SEO local** — Posicionamiento en búsquedas de "agencia web Uruguay"
-
-### Para Instructores SENA
-✅ **Demostración de competencias:**
-- Dominio de WordPress y Elementor
-- Diseño responsive y UX
-- Optimización de rendimiento
-- Mejores prácticas SEO
-- Gestión de hosting y dominio
-
-✅ **Evidencia de proyecto productivo:**
-- Sitio operacional en producción
-- Código versionado en GitHub
-- Documentación técnica completa
+| Rol | Acceso | Descripción |
+|-----|--------|-------------|
+| **Admin** | `/admin/*` | CRUD de usuarios, proyectos y pre-registros. Aprueba solicitudes de servicio. |
+| **Cliente** | `/dashboard`, `/projects/{id}` | Visualiza el progreso de su proyecto y revisiones disponibles. Puede editar la información básica. |
 
 ---
 
-## 🚀 Tecnologías por Componente
+## Flujo Principal del Sistema
 
-### Landing Pages (Clientes)
-```
-Frontend:  Elementor (drag-and-drop) + CSS personalizado
-Backend:   WordPress (gestor de contenidos)
-Forms:     Web3Forms (sin necesidad de PHP backend)
-SEO:       Rank Math + optimización manual
-Hosting:   Hostinger Business (LiteSpeed Cache)
-```
-
-### E-commerce (Tiendas Clientes)
-```
-Plataforma:  WordPress + WooCommerce
-Pagos:       Integración pasarela (procesando, MercadoPago)
-Inventario:  MySQL (base de datos WooCommerce)
-Email:       SureMail o SMTP nativo
-```
-
-### Optimización de Rendimiento
-```
-Caché:       LiteSpeed Cache (servidor Hostinger)
-Images:      Optimización Elementor + WEBP automático
-CSS/JS:      Minificación automática Elementor
-CDN:         Cloudflare (opcional, en roadmap)
-```
+1. **Solicitud de servicio** — el visitante llega a `/acceder` y hace clic en "Solicitar
+   servicio" → rellena el formulario en `/pre-registro` (nombre, correo, idea de proyecto).
+2. **Revisión admin** — el administrador ve la solicitud en `/admin/pre-registrations`
+   con estado *pendiente* y puede aprobarla o rechazarla.
+3. **Aprobación** — al aprobar, el sistema crea automáticamente el usuario (rol `client`)
+   y el proyecto vinculado. Si el email ya existe, vincula el proyecto al usuario existente
+   sin duplicarlo.
+4. **Notificación por email** — el cliente recibe un correo con sus credenciales de acceso
+   (contraseña temporal generada automáticamente).
+5. **Acceso del cliente** — el cliente inicia sesión en `/acceder`, llega a su dashboard
+   (`/dashboard`) y puede ver el detalle de su proyecto en `/projects/{id}`.
+6. **Seguimiento del proyecto** — el admin actualiza las etapas y el porcentaje de avance.
+   El cliente lo ve reflejado en tiempo real.
+   - Etapas: `briefing → wireframe → diseño UI → desarrollo → revisión → listo para entrega → entregado`
 
 ---
 
-## 📊 Métricas & Rendimiento Actual
+## Rutas Principales
 
-| Métrica | Estado | Meta |
-|---------|--------|------|
-| **Tiempo de carga** | < 2.5s | < 2s |
-| **Score Lighthouse** | 78+ | 90+ |
-| **Mobile Responsiveness** | ✅ 100% | ✅ 100% |
-| **SEO Score** | 85+ | 95+ |
-| **Clientes activos** | 0 (pre-revenue) | 3+ con mantenimiento mensual |
+### Públicas
 
----
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/` | Página de bienvenida |
+| GET | `/acceder` | Página de acceso / login (solo visitantes sin sesión) |
+| GET | `/pre-registro` | Formulario de solicitud de servicio |
+| POST | `/pre-registro` | Enviar solicitud |
 
-## 🔮 Futuros Ajustes & Roadmap
+### Cliente (requiere `auth` + rol `client`)
 
-### Q2 2026 (Próximos 30 días)
-- [ ] **Calculadora de precios dinámica** — Widget interactivo en la homepage
-  - Usuarios seleccionan tipo de sitio → reciben presupuesto estimado
-  - Implementación: HTML5 + JavaScript + Web3Forms para lead capture
-- [ ] **Sección de portfolio mejorada** — Galería de casos de uso (clientes reales o simulados)
-- [ ] **Blog de SEO** — Artículos sobre "desarrollo web Uruguay", "e-commerce PYME"
-- [ ] **Formulario de cotización avanzado** — Multi-paso con campo de presupuesto
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/dashboard` | Panel del cliente: resumen de proyectos |
+| GET | `/projects/{project}` | Detalle de proyecto: etapa, progreso, revisiones |
+| GET / PATCH / DELETE | `/profile` | Edición de perfil |
 
-### Q3 2026
-- [ ] **Integración con CRM** (HubSpot Free o Zoho CRM)
-- [ ] **Dashboard de seguimiento de proyectos** — Acceso cliente para ver avance
-- [ ] **Chatbot IA** — Respuesta automática WhatsApp Business API
-- [ ] **Página de servicios expandida** — Detalles técnicos por servicio
+### Admin (requiere `auth` + rol `admin`, prefijo `/admin`)
 
-### Q4 2026+
-- [ ] **Versión Laravel + Livewire** — Migración parcial a SPA reactiva
-- [ ] **Plataforma SaaS** — Herramienta de monitoreo/mantenimiento para clientes
-- [ ] **Internacionalización (i18n)** — Versión en inglés y portugués
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/admin/dashboard` | Panel admin: métricas globales |
+| GET/POST/PATCH/DELETE | `/admin/users` | CRUD de usuarios |
+| GET/POST/PATCH/DELETE | `/admin/projects` | CRUD de proyectos |
+| GET | `/admin/pre-registrations` | Lista de solicitudes pendientes / historial |
+| PATCH | `/admin/pre-registrations/{id}` | Aprobar o rechazar solicitud |
 
 ---
 
-## 🛡️ Seguridad & Buenas Prácticas
+## Estado Actual del Proyecto
 
-### Implementado
-✅ HTTPS / SSL (Hostinger gratuito)  
-✅ Backups automáticos (Hostinger)  
-✅ Actualizaciones WordPress automáticas  
-✅ wp-config.php fuera de raíz web  
-✅ .gitignore para credenciales  
+### Funcional
 
-### Roadmap Seguridad
-- [ ] 2FA para acceso wp-admin
-- [ ] WAF (Web Application Firewall) — Cloudflare
-- [ ] Auditoría de seguridad trimestral
-- [ ] Política de datos GDPR para clientes EU
+- [x] Autenticación con roles (`admin` / `client`) — Laravel Breeze
+- [x] Flujo completo de pre-registro: solicitud → revisión → aprobación → alta automática de usuario y proyecto
+- [x] Email automático al cliente con credenciales tras aprobación
+- [x] Manejo de pre-registro con email de cliente existente (vincula proyecto sin duplicar usuario)
+- [x] Dashboard admin: listado y CRUD de usuarios, proyectos y pre-registros
+- [x] Dashboard cliente: progreso, etapa actual y revisiones disponibles
+- [x] Página `/acceder` como punto de entrada unificado para visitantes y clientes
+- [x] Cascade delete de pre-registros al eliminar un usuario cliente
+
+### Pendiente
+
+- [ ] Deploy a `portal.darbin.tech` (Hostinger Business)
+- [ ] Validaciones adicionales en formularios del admin
+- [ ] Subida de archivos de avance por parte del admin
+- [ ] Notificaciones internas en el portal
+- [ ] Tests automatizados (PHPUnit / Pest)
 
 ---
 
-## 📱 Contacto & Soporte
+## Documentación Técnica Complementaria
+
+Ver [README-portal.md](./README-portal.md) para detalles adicionales sobre la estructura
+de carpetas, seeders y roadmap extendido.
+
+---
+
+## Contacto
 
 | Canal | Detalle |
-|-------|--------|
-| **WhatsApp** | +598 99 423 217 (principal) |
-| **Email** | alirioportilla96@gmail.com |
+|-------|----------------------------------|
+| **Email** | info@darbin.tech |
 | **Sitio Web** | https://darbin.tech/ |
 | **GitHub** | https://github.com/DarbIng-ops |
 | **Portfolio** | https://cvalirio.darbin.tech/ |
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Proyecto SENA - Uso educativo y comercial permitido.  
 Código personalizado © 2026 Alirio Portilla / Darbin Tech.
 
 ---
 
-## 👨‍💼 Acerca del Autor
-
-**Alirio Portilla**  
-- **Rol:** Founder & Full-Stack Developer  
-- **Formación:** SENA ADSO (Análisis y Desarrollo de Software)  
-- **Especialidades:** Laravel, PHP, WordPress, Elementor, Cyberseguridad  
-- **Ubicación:** Montevideo, Uruguay
-
----
-
-## 🤝 Contribuciones
-
-Para reportar bugs o sugerir mejoras:
-1. Abre un **Issue** en GitHub
-2. Describe el problema con detalle
-3. Incluye pantallazos si es necesario
-
----
-
-**Última actualización:** Mayo 2026  
-**Estado del proyecto:** ✅ En producción (pre-revenue)
-
----
-
-## Documentación técnica del portal
-
-Ver [README-portal.md](./README-portal.md) para instalación, rutas,
-roles y stack técnico del portal Laravel.
+**Última actualización:** Julio 2026  
+**Estado del proyecto:** En desarrollo activo — Deploy pendiente
