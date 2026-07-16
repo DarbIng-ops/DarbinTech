@@ -5,7 +5,6 @@
 # Laravel — archivos generados en runtime
 /public/hot
 /public/storage
-/public/build
 /storage/*.key
 /storage/pail
 /storage/framework/cache
