@@ -97,6 +97,22 @@
                 @enderror
             </div>
 
+            <div>
+                <div class="flex items-start gap-3">
+                    <input id="consent" name="consent" type="checkbox" required
+                        class="mt-0.5 h-4 w-4 rounded shrink-0 cursor-pointer"
+                        style="accent-color: var(--db-blue);"
+                        {{ old('consent') ? 'checked' : '' }}>
+                    <label for="consent" class="text-sm leading-snug cursor-pointer" style="color: var(--db-muted);">
+                        Acepto que mis datos sean usados para contactarme sobre este proyecto, según la
+                        <a href="{{ route('privacidad') }}" style="color: var(--db-blue);" class="hover:underline">Política de Privacidad</a>.
+                    </label>
+                </div>
+                @error('consent')
+                    <p class="mt-1 text-xs" style="color: #fca5a5;">{{ $message }}</p>
+                @enderror
+            </div>
+
             <button type="submit"
                 class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors"
                 style="background-color: var(--db-blue); color: #111111;"

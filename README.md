@@ -43,7 +43,7 @@ php artisan key:generate
 ```
 
 Configurá `.env` con tus credenciales de base de datos (`DB_HOST`, `DB_DATABASE`,
-`DB_USERNAME`, `DB_PASSWORD`), luego:
+`DB_USERNAME`, `DB_PASSWORD`) y de correo (ver sección [Configuración de Email](#configuración-de-email)), luego:
 
 ```bash
 php artisan migrate
@@ -55,6 +55,28 @@ php artisan serve     # servidor local en http://127.0.0.1:8000
 ```
 
 > **Atajo:** `composer run setup` ejecuta todos los pasos anteriores en un solo comando.
+
+---
+
+## Configuración de Email
+
+El sistema envía correos reales en varios puntos del flujo (ver Flujo Principal).
+Configurá las siguientes variables en `.env` según tu proveedor SMTP
+(en producción se usa Hostinger SMTP):
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=
+MAIL_FROM_ADDRESS=info@darbin.tech
+MAIL_FROM_NAME="Darbin Tech"
+```
+
+Consultá `.env.example` para la lista completa de variables requeridas.
+**No comitear credenciales reales** — `.env` está en `.gitignore`.
 
 ---
 
@@ -70,17 +92,24 @@ php artisan serve     # servidor local en http://127.0.0.1:8000
 ## Flujo Principal del Sistema
 
 1. **Solicitud de servicio** — el visitante llega a `/acceder` y hace clic en "Solicitar
-   servicio" → rellena el formulario en `/pre-registro` (nombre, correo, idea de proyecto).
-2. **Revisión admin** — el administrador ve la solicitud en `/admin/pre-registrations`
+   servicio" → rellena el formulario en `/pre-registro` (nombre, correo, idea de proyecto)
+   y acepta el checkbox de consentimiento de datos requerido por la Ley 18.331 de Uruguay.
+2. **Emails automáticos al enviar** — al completar el formulario, el sistema envía
+   automáticamente dos correos vía SMTP:
+   - **Confirmación al lead:** correo a la dirección que ingresó el visitante, acusando
+     recibo de su idea y avisando que serán contactados.
+   - **Notificación interna:** correo al equipo de Darbin Tech con el nombre, email e idea
+     del lead, con un enlace directo al panel admin.
+3. **Revisión admin** — el administrador ve la solicitud en `/admin/pre-registrations`
    con estado *pendiente* y puede aprobarla o rechazarla.
-3. **Aprobación** — al aprobar, el sistema crea automáticamente el usuario (rol `client`)
+4. **Aprobación** — al aprobar, el sistema crea automáticamente el usuario (rol `client`)
    y el proyecto vinculado. Si el email ya existe, vincula el proyecto al usuario existente
    sin duplicarlo.
-4. **Notificación por email** — el cliente recibe un correo con sus credenciales de acceso
+5. **Notificación por email** — el cliente recibe un correo con sus credenciales de acceso
    (contraseña temporal generada automáticamente).
-5. **Acceso del cliente** — el cliente inicia sesión en `/acceder`, llega a su dashboard
+6. **Acceso del cliente** — el cliente inicia sesión en `/acceder`, llega a su dashboard
    (`/dashboard`) y puede ver el detalle de su proyecto en `/projects/{id}`.
-6. **Seguimiento del proyecto** — el admin actualiza las etapas y el porcentaje de avance.
+7. **Seguimiento del proyecto** — el admin actualiza las etapas y el porcentaje de avance.
    El cliente lo ve reflejado en tiempo real.
    - Etapas: `briefing → wireframe → diseño UI → desarrollo → revisión → listo para entrega → entregado`
 
@@ -96,6 +125,7 @@ php artisan serve     # servidor local en http://127.0.0.1:8000
 | GET | `/acceder` | Página de acceso / login (solo visitantes sin sesión) |
 | GET | `/pre-registro` | Formulario de solicitud de servicio |
 | POST | `/pre-registro` | Enviar solicitud |
+| GET | `/privacidad` | Política de privacidad (Ley 18.331 de Uruguay) |
 
 ### Cliente (requiere `auth` + rol `client`)
 
@@ -123,7 +153,11 @@ php artisan serve     # servidor local en http://127.0.0.1:8000
 
 - [x] Autenticación con roles (`admin` / `client`) — Laravel Breeze
 - [x] Flujo completo de pre-registro: solicitud → revisión → aprobación → alta automática de usuario y proyecto
-- [x] Email automático al cliente con credenciales tras aprobación
+- [x] Checkbox de consentimiento obligatorio en el formulario de pre-registro (Ley 18.331 de Uruguay)
+- [x] Página `/privacidad` con política de privacidad bajo Ley 18.331 de Uruguay
+- [x] Email automático de confirmación al lead al enviar el formulario de pre-registro
+- [x] Notificación interna por email al equipo Darbin Tech al recibir un nuevo lead
+- [x] Email automático al cliente con credenciales tras aprobación de su solicitud
 - [x] Manejo de pre-registro con email de cliente existente (vincula proyecto sin duplicar usuario)
 - [x] Dashboard admin: listado y CRUD de usuarios, proyectos y pre-registros
 - [x] Dashboard cliente: progreso, etapa actual y revisiones disponibles
@@ -165,5 +199,5 @@ Código personalizado © 2026 Alirio Portilla / Darbin Tech.
 
 ---
 
-**Última actualización:** Julio 2026  
+**Última actualización:** Septiembre 2026  
 **Estado del proyecto:** En desarrollo activo — Deploy pendiente

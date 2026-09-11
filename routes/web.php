@@ -15,6 +15,7 @@ Route::get('/', fn () => redirect()->route('acceder'));
 // Public
 Route::get('/pre-registro', [PreRegistrationController::class, 'create'])->name('pre-registro');
 Route::post('/pre-registro', [PreRegistrationController::class, 'store'])->name('pre-registro.store');
+Route::get('/privacidad', fn () => view('privacidad.index'))->name('privacidad');
 
 // Client
 Route::middleware(['auth', 'role:client'])->group(function () {
